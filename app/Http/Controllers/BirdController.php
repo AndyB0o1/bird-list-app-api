@@ -28,6 +28,17 @@ class BirdController extends Controller
         ]);
     }
 
+    public function getRecent()
+    {
+        $recent = $this->bird->get()->sortDesc()->slice(0, 5);
+
+        return response()->json([
+           'message' => '5 most recent birds',
+            'success' => true,
+            'data' => $recent
+        ]);
+    }
+
     public function addBird(Request $request)
     {
         $request->validate([
