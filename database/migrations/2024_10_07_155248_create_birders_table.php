@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('birders', function (Blueprint $table) {
             $table->id();
             $table->string('username', 50);
-            $table->string('email');
+            $table->string('password')->nullable();
             $table->timestamps();
         });
     }

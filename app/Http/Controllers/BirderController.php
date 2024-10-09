@@ -38,7 +38,7 @@ class BirderController extends Controller
         $birder = new Birder;
 
         $birder->username = $request->username;
-        $birder->email = $request->email;
+        $birder->password = $request->password;
 
         if ($birder->save()) {
             return response()->json([

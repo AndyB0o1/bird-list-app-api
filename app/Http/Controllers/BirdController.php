@@ -19,7 +19,7 @@ class BirdController extends Controller
 
     public function allBirds()
     {
-        $birds = $this->bird->get();
+        $birds = $this->bird->with('birder')->get();
 
         return response()->json([
             'message' => 'Here are your birds',
@@ -30,7 +30,7 @@ class BirdController extends Controller
 
     public function getRecent()
     {
-        $recent = $this->bird->get()->sortDesc()->slice(0, 5);
+        $recent = $this->bird->with('birder')->get()->shuffle()->slice(0, 5);
 
         return response()->json([
            'message' => '5 most recent birds',
@@ -44,7 +44,8 @@ class BirdController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'string|max:255',
-            'location' => 'string|max:255'
+            'location' => 'string|max:255',
+            'birder_id' => 'integer|exists:birders,id'
         ]);
 
         $bird = new Bird;
@@ -52,6 +53,7 @@ class BirdController extends Controller
         $bird->name = $request->name;
         $bird->image = $request->image;
         $bird->location = $request->location;
+        $bird->birder_id = $request->birder_id;
 
         if ($bird->save()) {
             return response()->json([

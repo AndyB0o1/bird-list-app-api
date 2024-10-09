@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Birder extends Model
 {
     use HasFactory;
 
-    public function birds(): BelongsToMany {
-        return $this->belongsToMany(Bird::class);
+    public function birds(): HasMany
+    {
+        return $this->hasMany(Bird::class);
     }
 }
