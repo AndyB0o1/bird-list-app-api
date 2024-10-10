@@ -28,6 +28,17 @@ class BirdController extends Controller
         ]);
     }
 
+    public function mapBirds()
+    {
+        $mapBirds = $this->bird->where([ ['lat', '!=', null], ['lon', '!=', null]])->with('birder')->get();
+
+        return response()->json([
+            'message' => 'Here are your birds for the map',
+            'success' => true,
+            'data' => $mapBirds
+        ]);
+    }
+
     public function getRecent()
     {
         $recent = $this->bird->with('birder')->get()->shuffle()->slice(0, 5);
@@ -45,6 +56,8 @@ class BirdController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'string|max:255',
             'location' => 'string|max:255',
+            'lat' => 'numeric',
+            'lon' => 'numeric',
             'birder_id' => 'integer|exists:birders,id'
         ]);
 
@@ -53,6 +66,8 @@ class BirdController extends Controller
         $bird->name = $request->name;
         $bird->image = $request->image;
         $bird->location = $request->location;
+        $bird->lat = $request->lat;
+        $bird->lon = $request->lon;
         $bird->birder_id = $request->birder_id;
 
         if ($bird->save()) {

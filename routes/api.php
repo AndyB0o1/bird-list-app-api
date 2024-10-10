@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BirdController;
+use App\Http\Controllers\BirderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,6 +11,7 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/birds', [BirdController::class, 'allBirds']);
 Route::get('/recent', [BirdController::class, 'getRecent']);
+Route::get('/map', [BirdController::class, 'mapBirds']);
 Route::post('/birds', [BirdController::class, 'addBird']);
-Route::get('/birders', [App\Http\Controllers\BirderController::class, 'allBirders']);
-Route::post('/birders', [App\Http\Controllers\BirderController::class, 'addBirder']);
+Route::get('/birders', [BirderController::class, 'allBirders']);
+Route::post('/birders', [BirderController::class, 'addBirder']);
