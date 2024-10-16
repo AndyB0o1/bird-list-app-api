@@ -14,4 +14,6 @@ Route::get('/recent', [BirdController::class, 'getRecent']);
 Route::get('/map', [BirdController::class, 'mapBirds']);
 Route::post('/birds', [BirdController::class, 'addBird']);
 Route::get('/birders', [BirderController::class, 'allBirders']);
+Route::get('/all', [BirderController::class, 'birdersWithBirds']);
+Route::get('/user{id}', [BirderController::class, 'getBirderBirdList']);
 Route::post('/birders', [BirderController::class, 'addBirder']);

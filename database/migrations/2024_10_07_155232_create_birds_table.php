@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('birds', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('image')->nullable('https://banner2.cleanpng.com/20180316/yqe/av0ug257o.webp');
+            $table->string('image')->nullable();
             $table->string('location')->nullable();
             $table->foreignId('birder_id');
             $table->timestamps();

@@ -28,6 +28,28 @@ class BirderController extends Controller
         ]);
     }
 
+    public function birdersWithBirds()
+    {
+        $allBirdersAndBirds = $this->birder->with('birds')->get();
+
+        return response()->json([
+            'message' => 'Here is a list of all the birders and their list of birds',
+            'success' => true,
+            'data' => $allBirdersAndBirds
+        ]);
+    }
+
+    public function getBirderBirdList(int $id)
+    {
+        $birderWithBirds = $this->birder->with('birds')->find($id);
+
+        return response()->json([
+            'message' => 'User bird list returned',
+            'success' => true,
+            'data' => $birderWithBirds
+        ]);
+    }
+
     public function addBirder(Request $request)
     {
         $request->validate([
