@@ -9,9 +9,6 @@ class BirderController extends Controller
 {
     public Birder $birder;
 
-    /**
-     * @param Birder $birder
-     */
     public function __construct(Birder $birder)
     {
         $this->birder = $birder;
@@ -24,7 +21,7 @@ class BirderController extends Controller
         return response()->json([
             'message' => 'Here is a list of all the birders',
             'success' => true,
-            'data' => $birders
+            'data' => $birders,
         ]);
     }
 
@@ -35,7 +32,7 @@ class BirderController extends Controller
         return response()->json([
             'message' => 'Here is a list of all the birders and their list of birds',
             'success' => true,
-            'data' => $allBirdersAndBirds
+            'data' => $allBirdersAndBirds,
         ]);
     }
 
@@ -46,15 +43,15 @@ class BirderController extends Controller
         return response()->json([
             'message' => 'User bird list returned',
             'success' => true,
-            'data' => $birderWithBirds
+            'data' => $birderWithBirds,
         ]);
     }
 
     public function addBirder(Request $request)
     {
         $request->validate([
-           'username' => 'required|string|max:50',
-            'email' => 'string|max:255'
+            'username' => 'required|string|max:50',
+            'email' => 'string|max:255',
         ]);
 
         $birder = new Birder;
@@ -65,13 +62,13 @@ class BirderController extends Controller
         if ($birder->save()) {
             return response()->json([
                 'message' => 'Birder created',
-                'success' => true
-                ], 201);
+                'success' => true,
+            ], 201);
         }
 
         return response()->json([
             'message' => 'Birder not created',
-            'success' => false
+            'success' => false,
         ], 500);
     }
 }

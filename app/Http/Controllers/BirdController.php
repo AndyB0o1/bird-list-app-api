@@ -9,9 +9,6 @@ class BirdController extends Controller
 {
     public Bird $bird;
 
-    /**
-     * @param Bird $bird
-     */
     public function __construct(Bird $bird)
     {
         $this->bird = $bird;
@@ -24,18 +21,18 @@ class BirdController extends Controller
         return response()->json([
             'message' => 'Here are your birds',
             'success' => true,
-            'data' => $birds
+            'data' => $birds,
         ]);
     }
 
     public function mapBirds()
     {
-        $mapBirds = $this->bird->where([ ['lat', '!=', null], ['lon', '!=', null]])->with('birder')->get();
+        $mapBirds = $this->bird->where([['lat', '!=', null], ['lon', '!=', null]])->with('birder')->get();
 
         return response()->json([
             'message' => 'Here are your birds for the map',
             'success' => true,
-            'data' => $mapBirds
+            'data' => $mapBirds,
         ]);
     }
 
@@ -44,9 +41,9 @@ class BirdController extends Controller
         $recent = $this->bird->with('birder')->get()->shuffle()->slice(0, 5);
 
         return response()->json([
-           'message' => '5 most recent birds',
+            'message' => '5 most recent birds',
             'success' => true,
-            'data' => $recent
+            'data' => $recent,
         ]);
     }
 
@@ -58,7 +55,7 @@ class BirdController extends Controller
             'location' => 'string|max:255',
             'lat' => 'numeric',
             'lon' => 'numeric',
-            'birder_id' => 'integer|exists:birders,id'
+            'birder_id' => 'integer|exists:birders,id',
         ]);
 
         $bird = new Bird;
@@ -73,14 +70,13 @@ class BirdController extends Controller
         if ($bird->save()) {
             return response()->json([
                 'message' => 'Bird added',
-                'success' => true
+                'success' => true,
             ], 201);
         }
 
         return response()->json([
             'message' => 'Bird not created',
-            'success' => false
+            'success' => false,
         ], 500);
     }
-
 }

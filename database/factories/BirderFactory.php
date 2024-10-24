@@ -17,7 +17,8 @@ class BirderFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'username' => $this->faker->name(),
+            'password' => $this->faker->password()
         ];
     }
 }
