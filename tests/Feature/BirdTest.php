@@ -37,4 +37,60 @@ class BirdTest extends TestCase
                         });
                     });
     }
+
+    public function test_addBird_success(): void
+    {
+        Birder::factory()->create();
+
+        $testData = [
+            'name' => 'Cassowary',
+            'image' => '/image.png',
+            'location' => 'Oz',
+            'lat' => 50.1,
+            'lon' => -2.4,
+            'birder_id' => 1
+        ];
+
+        $response = $this->postJson('/api/birds', $testData);
+
+        $response->assertStatus(201)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message', 'success']);
+            });
+
+        $this->assertDatabaseHas('birds', $testData);
+    }
+
+    public function test_addBirdAllData_failure(): void
+    {
+        $testData = [
+            'name' => '',
+            'image' => '',
+            'location' => '',
+            'lat' => 'th',
+            'lon' => 'ab',
+            'birder_id' => 1
+        ];
+
+        $response = $this->postJson('/api/birds', $testData);
+
+        $response->assertStatus(422)
+            ->assertInvalid([
+                'name' => 'The name field is required.',
+                'image' => 'The image field must be a string.',
+                'location' => 'The location field must be a string.',
+                'lat' => 'The lat field must be a number.',
+                'lon' => 'The lon field must be a number.',
+                'birder_id' => 'The selected birder id is invalid.'
+            ]);
+
+        $this->assertDatabaseMissing('birds', [
+            'name' => '',
+            'image' => '',
+            'location' => '',
+            'lat' => 'th',
+            'lon' => 'ab',
+            'birder_id' => 1
+        ]);
+    }
 }
