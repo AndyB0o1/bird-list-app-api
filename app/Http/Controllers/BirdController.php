@@ -79,4 +79,58 @@ class BirdController extends Controller
             'success' => false,
         ], 500);
     }
+
+    public function editBird(int $id, Request $request)
+    {
+        $bird = Bird::find($id);
+
+        if (!$bird) {
+            return response()->json([
+                'message' => 'Bird not found',
+                'success' => false
+            ], 400);
+        }
+
+        $bird->name = $request->name ?? $bird->name;
+        $bird->image = $request->image ?? $bird->image;
+        $bird->location = $request->location ?? $bird->location;
+        $bird->lat = $request->lat ?? $bird->lat;
+        $bird->lon = $request->lon ?? $bird->lon;
+        $bird->birder_id = $request->birder_id ?? $bird->birder_id;
+
+        if ($bird->save()) {
+            return response()->json([
+                'message' => 'Bird sighting updated',
+                'success' => true,
+                'data' => $bird
+            ]);
+        }
+        return response()->json([
+            'message' => 'Something went wrong',
+            'success' => false
+        ], 500);
+    }
+
+    public function deleteBird(int $id)
+    {
+        $bird = Bird::find($id);
+
+        if (!$bird) {
+            return response()->json([
+                'message' => 'No such Bird',
+                'success' => false
+            ], 400);
+        }
+
+        if ($bird->delete()) {
+            return response()->json([
+                'message' => 'Bird successfully deleted',
+                'success' => true
+            ]);
+        }
+        return response()->json([
+            'message' => 'Something went wrong :-(',
+            'success' => false
+        ], 500);
+    }
 }

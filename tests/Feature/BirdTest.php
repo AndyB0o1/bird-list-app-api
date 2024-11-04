@@ -31,7 +31,8 @@ class BirdTest extends TestCase
                             'location',
                             'lat',
                             'lon',
-                            'birder_id'
+                            'birder_id',
+                            'deleted_at'
                         ]);
                         $json->has('birder');
                         });
@@ -48,7 +49,8 @@ class BirdTest extends TestCase
             'location' => 'Oz',
             'lat' => 50.1,
             'lon' => -2.4,
-            'birder_id' => 1
+            'birder_id' => 1,
+            'deleted_at' => null
         ];
 
         $response = $this->postJson('/api/birds', $testData);
@@ -69,10 +71,11 @@ class BirdTest extends TestCase
             'location' => '',
             'lat' => 'th',
             'lon' => 'ab',
-            'birder_id' => 1
+            'birder_id' => 1,
+            'deleted_at' => null
         ];
 
-        $response = $this->postJson('/api/birds', $testData);
+        $response = $this->postJson('api/birds', $testData);
 
         $response->assertStatus(422)
             ->assertInvalid([
@@ -90,7 +93,17 @@ class BirdTest extends TestCase
             'location' => '',
             'lat' => 'th',
             'lon' => 'ab',
-            'birder_id' => 1
+            'birder_id' => 1,
+            'deleted_at' => null
         ]);
+    }
+
+    public function test_deleteBird_success(): void
+    {
+        $bird = Bird::factory()->create();
+
+        $bird->delete();
+
+        $this->assertSoftDeleted($bird);
     }
 }

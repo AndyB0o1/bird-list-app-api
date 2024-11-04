@@ -13,7 +13,10 @@ Route::get('/birds', [BirdController::class, 'allBirds']);
 Route::get('/recent', [BirdController::class, 'getRecent']);
 Route::get('/map', [BirdController::class, 'mapBirds']);
 Route::post('/birds', [BirdController::class, 'addBird']);
+Route::put('/birds/{id}', [BirdController::class, 'editBird']);
+Route::delete('/birds/{id}', [BirdController::class, 'deleteBird']);
+
 Route::get('/birders', [BirderController::class, 'allBirders']);
 Route::get('/all', [BirderController::class, 'birdersWithBirds']);
-Route::get('/birder{id}', [BirderController::class, 'getBirderBirdList']);
+Route::get('/birders/{id}', [BirderController::class, 'getBirderBirdList']);
 Route::post('/birders', [BirderController::class, 'addBirder']);

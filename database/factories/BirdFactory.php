@@ -23,7 +23,8 @@ class BirdFactory extends Factory
             'location' => $this->faker->locale(),
             'lat' => $this->faker->randomFloat(),
             'lon' => $this->faker->randomFloat(),
-            'birder_id' => Birder::factory()
+            'birder_id' => Birder::factory(),
+            'deleted_at' => null
         ];
     }
 }

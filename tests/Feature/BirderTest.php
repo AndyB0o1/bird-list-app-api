@@ -38,7 +38,7 @@ class BirderTest extends TestCase
     {
         Birder::factory()->has(Bird::factory()->count(3))->create();
 
-        $response = $this->getJson('api/birder1');
+        $response = $this->getJson('api/birders/1');
 
         $response->assertStatus(200)
             ->assertJson(function (AssertableJson $json) {
@@ -57,7 +57,8 @@ class BirderTest extends TestCase
                                 'location',
                                 'lat',
                                 'lon',
-                                'birder_id'
+                                'birder_id',
+                                'deleted_at'
                             ]);
                         });
                     });
