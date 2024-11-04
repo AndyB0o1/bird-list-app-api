@@ -98,6 +98,33 @@ class BirdTest extends TestCase
         ]);
     }
 
+    public function test_editBird_success(): void
+    {
+        Birder::factory()->create();
+        Bird::factory()->create();
+
+        $response = $this->putJson('/api/birds/1', [
+            'name' => 'Bob',
+            'image' => 'an image',
+            'location' => 'Nowhere',
+            'lat' => 20,
+            'lon' => -20,
+            'birder_id' => 1,
+            'deleted_at' => null
+        ]);
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('birds', [
+                'name' => 'Bob',
+                'image' => 'an image',
+                'location' => 'Nowhere',
+                'lat' => 20,
+                'lon' => -20,
+                'birder_id' => 1,
+                'deleted_at' => null
+            ]);
+
+    }
+
     public function test_deleteBird_success(): void
     {
         $bird = Bird::factory()->create();

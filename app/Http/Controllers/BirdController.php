@@ -84,10 +84,10 @@ class BirdController extends Controller
     {
         $bird = Bird::find($id);
 
-        if (!$bird) {
+        if (! $bird) {
             return response()->json([
                 'message' => 'Bird not found',
-                'success' => false
+                'success' => false,
             ], 400);
         }
 
@@ -102,12 +102,13 @@ class BirdController extends Controller
             return response()->json([
                 'message' => 'Bird sighting updated',
                 'success' => true,
-                'data' => $bird
+                'data' => $bird,
             ]);
         }
+
         return response()->json([
             'message' => 'Something went wrong',
-            'success' => false
+            'success' => false,
         ], 500);
     }
 
@@ -115,22 +116,23 @@ class BirdController extends Controller
     {
         $bird = Bird::find($id);
 
-        if (!$bird) {
+        if (! $bird) {
             return response()->json([
                 'message' => 'No such Bird',
-                'success' => false
+                'success' => false,
             ], 400);
         }
 
         if ($bird->delete()) {
             return response()->json([
                 'message' => 'Bird successfully deleted',
-                'success' => true
+                'success' => true,
             ]);
         }
+
         return response()->json([
             'message' => 'Something went wrong :-(',
-            'success' => false
+            'success' => false,
         ], 500);
     }
 }
