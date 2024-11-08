@@ -47,6 +47,23 @@ class BirdController extends Controller
         ]);
     }
 
+    public function getSingleBird(int $id)
+    {
+        $bird = $this->bird->find($id);
+
+        if (! $bird) {
+            return response()->json([
+                'message' => 'Bird sighting does not exist',
+                'success' => false,
+            ], 400);
+        }
+            return response()->json([
+                'message' => 'Here is your bird',
+                'success' => true,
+                'data' => $bird,
+            ]);
+        }
+
     public function addBird(Request $request)
     {
         $request->validate([
@@ -82,7 +99,7 @@ class BirdController extends Controller
 
     public function editBird(int $id, Request $request)
     {
-        $bird = Bird::find($id);
+        $bird = $this->bird->find($id);
 
         if (! $bird) {
             return response()->json([

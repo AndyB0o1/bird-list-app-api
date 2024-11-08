@@ -11,6 +11,7 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/birds', [BirdController::class, 'allBirds']);
 Route::get('/recent', [BirdController::class, 'getRecent']);
+Route::get('/birds/{id}', [BirdController::class, 'getSingleBird']);
 Route::get('/map', [BirdController::class, 'mapBirds']);
 Route::post('/birds', [BirdController::class, 'addBird']);
 Route::put('/birds/{id}', [BirdController::class, 'editBird']);

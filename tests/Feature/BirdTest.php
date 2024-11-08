@@ -39,6 +39,30 @@ class BirdTest extends TestCase
                     });
     }
 
+    public function test_getSingleBird_success(): void
+    {
+        Bird::factory()->has(Birder::factory())->create();
+
+        $response = $this->getJson('api/birds/1');
+
+        $response->assertStatus(200)
+            ->assertJson(function (AssertableJson $json) {
+                $json->hasAll(['message', 'success', 'data'])
+                    ->has('data', function (AssertableJson $json) {
+                        $json->hasAll([
+                            'id',
+                            'name',
+                            'image',
+                            'location',
+                            'lat',
+                            'lon',
+                            'birder_id',
+                            'deleted_at'
+                        ]);
+                    });
+            });
+    }
+
     public function test_addBird_success(): void
     {
         Birder::factory()->create();

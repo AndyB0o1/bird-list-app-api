@@ -14,6 +14,6 @@ class Birder extends Model
 
     public function birds(): HasMany
     {
-        return $this->hasMany(Bird::class);
+        return $this->hasMany(Bird::class)->orderBy('name');
     }
 }
