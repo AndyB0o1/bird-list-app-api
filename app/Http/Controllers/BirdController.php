@@ -16,7 +16,7 @@ class BirdController extends Controller
 
     public function allBirds()
     {
-        $birds = $this->bird->with('birder')->get();
+        $birds = $this->bird->with('user')->get();
 
         return response()->json([
             'message' => 'Here are your birds',
@@ -27,7 +27,7 @@ class BirdController extends Controller
 
     public function mapBirds()
     {
-        $mapBirds = $this->bird->where([['lat', '!=', null], ['lon', '!=', null]])->with('birder')->get();
+        $mapBirds = $this->bird->where([['lat', '!=', null], ['lon', '!=', null]])->with('user')->get();
 
         return response()->json([
             'message' => 'Here are your birds for the map',
@@ -38,10 +38,10 @@ class BirdController extends Controller
 
     public function getRecent()
     {
-        $recent = $this->bird->with('birder')->get()->shuffle()->slice(0, 5);
+        $recent = $this->bird->with('user')->get()->shuffle()->slice(0, 5);
 
         return response()->json([
-            'message' => '5 most recent birds',
+            'message' => '5 recent bird sightings',
             'success' => true,
             'data' => $recent,
         ]);
@@ -72,7 +72,7 @@ class BirdController extends Controller
             'location' => 'string|max:255',
             'lat' => 'numeric',
             'lon' => 'numeric',
-            'birder_id' => 'integer|exists:birders,id',
+            'user_id' => 'integer|exists:users,id',
         ]);
 
         $bird = new Bird;
@@ -82,7 +82,7 @@ class BirdController extends Controller
         $bird->location = $request->location;
         $bird->lat = $request->lat;
         $bird->lon = $request->lon;
-        $bird->birder_id = $request->birder_id;
+        $bird->user_id = $request->user_id;
 
         if ($bird->save()) {
             return response()->json([
@@ -113,7 +113,7 @@ class BirdController extends Controller
         $bird->location = $request->location ?? $bird->location;
         $bird->lat = $request->lat ?? $bird->lat;
         $bird->lon = $request->lon ?? $bird->lon;
-        $bird->birder_id = $request->birder_id ?? $bird->birder_id;
+        $bird->user_id = $request->user_id ?? $bird->user_id;
 
         if ($bird->save()) {
             return response()->json([

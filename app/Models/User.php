@@ -4,12 +4,20 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
+
+    public $hidden = ['created_at', 'updated_at'];
+    public function birds(): HasMany
+    {
+        return $this->hasMany(Bird::class)->orderBy('name');
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -27,10 +35,10 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+//    protected $hidden = [
+//        'password',
+//        'remember_token',
+//    ];
 
     /**
      * Get the attributes that should be cast.

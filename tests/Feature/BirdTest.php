@@ -3,10 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Bird;
-use App\Models\Birder;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
@@ -16,7 +14,7 @@ class BirdTest extends TestCase
 
     public function test_getAllBirds_success(): void
     {
-        Bird::factory()->count(5)->has(Birder::factory()->count(1))->create();
+        Bird::factory()->count(5)->has(User::factory()->count(1))->create();
 
         $response = $this->getJson('api/birds');
 
@@ -31,17 +29,17 @@ class BirdTest extends TestCase
                             'location',
                             'lat',
                             'lon',
-                            'birder_id',
+                            'user_id',
                             'deleted_at'
                         ]);
-                        $json->has('birder');
+                        $json->has('user');
                         });
                     });
     }
 
     public function test_getSingleBird_success(): void
     {
-        Bird::factory()->has(Birder::factory())->create();
+        Bird::factory()->has(User::factory())->create();
 
         $response = $this->getJson('api/birds/1');
 
@@ -56,7 +54,7 @@ class BirdTest extends TestCase
                             'location',
                             'lat',
                             'lon',
-                            'birder_id',
+                            'user_id',
                             'deleted_at'
                         ]);
                     });
@@ -65,7 +63,7 @@ class BirdTest extends TestCase
 
     public function test_addBird_success(): void
     {
-        Birder::factory()->create();
+        User::factory()->create();
 
         $testData = [
             'name' => 'Cassowary',
@@ -73,7 +71,7 @@ class BirdTest extends TestCase
             'location' => 'Oz',
             'lat' => 50.1,
             'lon' => -2.4,
-            'birder_id' => 1,
+            'user_id' => 1,
             'deleted_at' => null
         ];
 
@@ -95,7 +93,7 @@ class BirdTest extends TestCase
             'location' => '',
             'lat' => 'th',
             'lon' => 'ab',
-            'birder_id' => 1,
+            'user_id' => 1,
             'deleted_at' => null
         ];
 
@@ -108,7 +106,7 @@ class BirdTest extends TestCase
                 'location' => 'The location field must be a string.',
                 'lat' => 'The lat field must be a number.',
                 'lon' => 'The lon field must be a number.',
-                'birder_id' => 'The selected birder id is invalid.'
+                'user_id' => 'The selected user id is invalid.'
             ]);
 
         $this->assertDatabaseMissing('birds', [
@@ -117,14 +115,14 @@ class BirdTest extends TestCase
             'location' => '',
             'lat' => 'th',
             'lon' => 'ab',
-            'birder_id' => 1,
+            'user_id' => 1,
             'deleted_at' => null
         ]);
     }
 
     public function test_editBird_success(): void
     {
-        Birder::factory()->create();
+        User::factory()->create();
         Bird::factory()->create();
 
         $response = $this->putJson('/api/birds/1', [
@@ -133,7 +131,7 @@ class BirdTest extends TestCase
             'location' => 'Nowhere',
             'lat' => 20,
             'lon' => -20,
-            'birder_id' => 1,
+            'user_id' => 1,
             'deleted_at' => null
         ]);
         $response->assertStatus(200);
@@ -143,7 +141,7 @@ class BirdTest extends TestCase
                 'location' => 'Nowhere',
                 'lat' => 20,
                 'lon' => -20,
-                'birder_id' => 1,
+                'user_id' => 1,
                 'deleted_at' => null
             ]);
 
