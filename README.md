@@ -1,3 +1,13 @@
+#My Bird List App#
+
+Laravel backend for an app that allows registered users to create and maintain a list of their bird sightings (their "life list"). Uses Laravel Sanctum for user authentication and allows logged in users to add, edit and remove bird sightings from their list. Users can record the species, the location and a link to an image url if available. Unit tests for the majority of controller methods have been included.
+
+Next step is to add in search functionality within a users list and add the last feature tests that are not yet written.
+
+Frontend is written in React and the repo is also public.
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
