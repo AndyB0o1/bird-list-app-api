@@ -39,15 +39,15 @@ class UserController extends Controller
 
     public function getUserBirdList(int $id)
     {
+
         $userWithBirds = $this->user->with('birds')->find($id);
 
         return response()->json([
             'message' => 'User bird list returned',
             'success' => true,
-            'data' => $userWithBirds,
+            'data' => $userWithBirds
         ]);
     }
-
     public function addUser(Request $request)
     {
         $request->validate([

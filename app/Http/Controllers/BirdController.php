@@ -14,9 +14,23 @@ class BirdController extends Controller
         $this->bird = $bird;
     }
 
-    public function allBirds()
+    public function allBirds(Request $request)
     {
-        $birds = $this->bird->with('user')->get();
+        $request->validate([
+            'search' => 'string'
+        ]);
+
+        $birdQuery = $this->bird->query();
+
+        if ($request->search) {
+            $birdQuery = $birdQuery->whereAny(['name', 'location'], 'LIKE', "%{$request->search}%");
+        }
+
+        else {
+            $birdQuery = $this->bird->with('user');
+        }
+
+        $birds = $birdQuery->with('user')->get();
 
         return response()->json([
             'message' => 'Here are your birds',
