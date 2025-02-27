@@ -23,11 +23,6 @@ Route::post('/birds', [BirdController::class, 'addBird']);
 Route::put('/birds/{id}', [BirdController::class, 'editBird']);
 Route::delete('/birds/{id}', [BirdController::class, 'deleteBird']);
 
-//Route::get('/birders', [BirderController::class, 'allBirders']);
-//Route::get('/all', [BirderController::class, 'birdersWithBirds']);
-//Route::get('/birders/{id}', [BirderController::class, 'getBirderBirdList']);
-//Route::post('/birders', [BirderController::class, 'addBirder']);
-
 Route::get('/users', [UserController::class, 'allUsers']);
 Route::get('/all', [UserController::class, 'usersWithBirds']);
 Route::get('/users/{id}', [UserController::class, 'getUserBirdList']);
